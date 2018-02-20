@@ -9,6 +9,7 @@ school.controller('studentCtrl',function ($scope, $http, $location) {
 	}).then(function(response){
 		$scope.data=response.data;
 		
+		
 	},function(err){
 		console.log('err');
 	});

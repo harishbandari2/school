@@ -2,6 +2,8 @@ var express    = require('express');
 var app		   = express();
 var mongoose   = require('mongoose');
 var bodyParser = require('body-parser');
+var path       = require('path');
+
 
 var dbHost = 'mongodb://localhost:27017/school';
 mongoose.connect(dbHost,function(err){
@@ -20,21 +22,10 @@ var student = require('./app/student-crud');
 app.use('/teacher',teacher);
 app.use('/student',student);
 
-
-app.get('/studentview/:id', function(req, res){
-	user.find({_id: req.params.id}, function(err, docs){
-			if(err) res.json(err);
-			else    res.render('show', {user: docs[0]});
-		});	
-});
-
-
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(path.join(__dirname + '/public')));
 app.use(function(req,res){
 	res.sendFile(__dirname+'/public/index.html');
 });
-
-//main
 require('./app/routes')(app);
 
 var PORT = process.env.PORT || 3000;

@@ -55,8 +55,10 @@ router.post('/login',function(req, res) {
 		if(docs){
 			if(docs.password === newTeacher.password){
 				console.log("success");
-				var msg=true;
-				res.json(docs);
+				res.render('/tdashboard.html');
+			
+				//var msg=true;
+				//res.json(docs);
                
 			}               
 			else{

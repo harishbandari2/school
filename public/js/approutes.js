@@ -29,9 +29,9 @@ angular.module('appRoutes',[])
 		templateUrl: 'views/addstudent.html',
 		controller : 'studentCtrl'
 	})
-	.when('/sview?id/',{
+	.when('/view/:id',{
 		templateUrl: 'views/studentdetail.html',
-		controller : ''
+		controller : 'viewCtrl'
 	})
 
 	.when('/login',{

@@ -51,7 +51,7 @@ router.post('/login',function(req, res,next) {
 	});
 
 	
-	Teacher.findOne({'username':newStudent.username},function(err, docs){
+	Student.findOne({'username':newStudent.username},function(err, docs){
 		if(err) throw err;
 		//console.log(docs);
 		if(docs){
@@ -69,18 +69,48 @@ router.post('/login',function(req, res,next) {
 		
 	});
 });
+
+//view by id
+
+router.post('/view',function(req, res,next) {
+	console.log(req.body.rollno);
+	var newStudent = new Student({
+
+		rollno   : req.body.rollno,
+	});
+
+	
+	Student.findOne({'rollno':newStudent.rollno},function(err, docs){
+		if(err) throw err;
+		//console.log(docs);
+		if(docs){
+		
+                console.log("success");
+                res.json(docs);
+//res.render('/register.html');
+                
+		}
+			           
+			else{
+			    console.log("Incorrect Password");
+			}
+		
+		
+	});
+});
+////////////////
+
+
 router.get('/all',function(req,res){
 	Student.find({},function(err,docs){
 		res.json(docs);
 	    
 	});
 });
-router.get('/:id',function(req,res){
-	//Student.find({},function(err,docs){
-        //res.json(docs);
-        console.log(req.params.id);
-	    
-	});
+
+
+
+
 //});
 
 module.exports = router;
