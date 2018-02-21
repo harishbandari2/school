@@ -3,6 +3,7 @@ var express = require('express');
 var router  = express.Router();
 bodyParser  = require('body-parser');
 var mongoose = require('mongoose');
+var bcrypt   = require('bcrypt')
 
 // creating company schema
 var teacherSchema = mongoose.Schema({
@@ -34,11 +35,22 @@ router.post('/add',function(req, res) {
 	});
 
 	console.log(newTeacher);
-	newTeacher.save(function(err, docs){
-		if(err) throw err;
-		console.log('Saved');
-		res.json(docs);
-	});
+	  
+	bcrypt.genSalt(10, (err, salt) =>{
+		bcrypt.hash(newTeacher.password, salt, (err ,hash)=>{
+		 
+			newTeacher.password=hash;		  
+		  
+		  newTeacher.save(function(err, docs){
+			if(err) throw err;
+			console.log('Saved');
+			res.json(docs);
+		});
+		});
+	  });
+
+
+
 });
 
 router.post('/login',function(req, res) {
@@ -48,17 +60,29 @@ router.post('/login',function(req, res) {
 		password   : req.body.password
 	});
 
-	
+	console.log(newTeacher.username);
 	Teacher.findOne({'username':newTeacher.username},function(err, docs){
 		if(err) throw err;
-		//console.log(docs);
+		
 		if(docs){
-			if(docs.password === newTeacher.password){
-				console.log("success");
-				res.render('/tdashboard.html');
 			
-				//var msg=true;
-				//res.json(docs);
+			if(docs.password == newTeacher.password){
+				retStatus = 'Success';
+				console.log(retStatus);
+				
+
+
+				res.send({
+					retStatus : retStatus,
+					redirectTo: '/tdashboard',
+					msg : 'Just go there please' // this should help
+				  });
+				
+			
+			//	res.redirect('/tdashboard.html');
+		//	res.json(docs);
+			
+			
                
 			}               
 			else{
@@ -68,11 +92,6 @@ router.post('/login',function(req, res) {
 		
 	});
 });
-router.get('/all',function(req,res){
-	Teacher.find({},function(err,docs){
-		res.json(docs);
-	    console.log(docs);
-	});
-});
+
 
 module.exports = router;

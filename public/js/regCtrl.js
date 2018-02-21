@@ -33,6 +33,8 @@ school.controller('regCtrl',function ($scope, $http, $location) {
 			data   : angular.fromJson(teacher)
 		}).then(function(response){
 			$scope.addRmsg="Successfully Added";
+			console.log($scope.addRmsg);
+			
             t.firstname="";
             t.lastname="";
             t.department="";
@@ -40,9 +42,7 @@ school.controller('regCtrl',function ($scope, $http, $location) {
             t.password="";
             t.email="";
 			t.contact_no="";
-			$timeout(function(){
-				$location.path('/');
-			},2000);
+			
 		});
 	}; 
 

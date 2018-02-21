@@ -1,20 +1,14 @@
-school.controller('loginCtrl',function ($scope, $http, $location,$window) {
+school.controller('loginCtrl',function ($scope, $http, $location,$timeout) {
 	$scope.name="";
 	$scope.addRmsg="";
 
 	/* HTTP */
-	$http({
-		method: 'GET',
-		url   : '/teacher/all'
-	}).then(function(response){
-		$scope.data=response.data;
-	},function(err){
-		console.log('err');
-	});
 
 
 	$scope.loginTeacher = function(t){
 		
+        var msg="";
+
 		var teacher = {
 		username   : t.username,
 		password   : t.password,
@@ -26,16 +20,30 @@ school.controller('loginCtrl',function ($scope, $http, $location,$window) {
 			url    : '/teacher/login',
 			headers: {'Content-Type':'application/json'},
 			data   : angular.fromJson(teacher)
-		}).then(function(response){
-			$scope.addRmsg="Successfully loged";
-			console.log(docs);
-			if(docs){
-				$window.location.href = "http://www.google.com";
+		})
+
+		.then(function(response){
+		   console.log(response.data);
+		   var data=response.data;
+		   
+			
+			if(data.retStatus === 'Success') {
+				// not sure what did you mean by ('/team' && '/team' !== "")
+				// if('/team' && '/team' !== "") {
+				if (data.redirectTo && data.msg == 'Just go there please') {
+					window.location = data.redirectTo;
+				}
 			}
 			
-            
-
+				
+				
+			
 		});
+		
+            
+		
+	
+		
 	}; 
 
 } );

@@ -3,8 +3,8 @@ angular.module('appRoutes',[])
 	$routeProvider
 
 	.when('/',{
-        templateUrl: 'views/register.html',
-        controller : 'regCtrl'
+        templateUrl: 'views/login.html',
+        controller : 'loginCtrl'
 		
 	})
 		.when('/studentdetails',{
@@ -32,6 +32,10 @@ angular.module('appRoutes',[])
 	.when('/view/:id',{
 		templateUrl: 'views/studentdetail.html',
 		controller : 'viewCtrl'
+	})
+	.when('/sedit/:id',{
+		templateUrl: 'views/editstudent.html',
+		controller : 'editstuCtrl'
 	})
 
 	.when('/login',{
