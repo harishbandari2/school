@@ -31,7 +31,6 @@ router.post('/add',function(req, res) {
 		email      : req.body.email,
 		contact_no : req.body.contact_no
 
-
 	});
 
 	console.log(newTeacher);
@@ -49,8 +48,6 @@ router.post('/add',function(req, res) {
 		});
 	  });
 
-
-
 });
 
 router.post('/login',function(req, res) {
@@ -61,37 +58,22 @@ router.post('/login',function(req, res) {
 	});
 
 	console.log(newTeacher.username);
+
+
 	Teacher.findOne({'username':newTeacher.username},function(err, docs){
 		if(err) throw err;
 		
 		if(docs){
-			
-			if(docs.password == newTeacher.password){
-				retStatus = 'Success';
-				console.log(retStatus);
-				
-
-
+			if(bcrypt.compareSync(newTeacher.password, docs.password)){
+				retStatus = 'Success';				
 				res.send({
-					retStatus : retStatus,
-					redirectTo: '/tdashboard',
-					msg : 'Just go there please' // this should help
-				  });
-				
-			
-			//	res.redirect('/tdashboard.html');
-		//	res.json(docs);
-			
-			
-               
-			}               
-			else{
-			    console.log("Incorrect Password");
+				retStatus  :  retStatus,
+				redirectTo : '/tdashboard',
+				msg        : 'Just go there please' // this should help
+			  });
 			}
 		}
 		
 	});
 });
-
-
 module.exports = router;

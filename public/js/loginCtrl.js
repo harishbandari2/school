@@ -23,11 +23,14 @@ school.controller('loginCtrl',function ($scope, $http, $location,$timeout) {
 		})
 
 		.then(function(response){
+			console.log("in");
 		   console.log(response.data);
 		   var data=response.data;
 		   
 			
 			if(data.retStatus === 'Success') {
+				
+				
 				// not sure what did you mean by ('/team' && '/team' !== "")
 				// if('/team' && '/team' !== "") {
 				if (data.redirectTo && data.msg == 'Just go there please') {
