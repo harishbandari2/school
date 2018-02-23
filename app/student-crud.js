@@ -6,6 +6,8 @@ var mongoose   = require('mongoose');
 var multer     = require('multer');
 var upload     = multer({ dest: 'uploads/' })
 var fs         = require('fs');
+var passport   = require('passport');
+var jwt      = require('jsonwebtoken');
 
 // creating company schema
 var studentSchema = mongoose.Schema({
@@ -49,10 +51,7 @@ router.post('/add',upload.any(),function(req, res) {
 				password   : req.body.password,
 				email      : req.body.email,
 				contact_no : req.body.contact_no,
-				image      : filename    
-		
-
-
+				image      : filename  
 			});
 
 			newStudent.save(function(err, docs){
@@ -101,7 +100,7 @@ router.post('/login',function(req, res,next) {
 
 //view by id
 
-router.post('/view',function(req, res,next) {
+router.post('/view',passport.authenticate('jwt', {session:false}),function(req, res,next) {
 	console.log(req.body.rollno);
 	var newStudent = new Student({
 

@@ -2,6 +2,7 @@ var express    = require('express');
 var app		   = express();
 var mongoose   = require('mongoose');
 var bodyParser = require('body-parser');
+var passport   = require('passport');
 var path       = require('path');
 var multer     = require('multer');
 var upload = multer({ dest: 'uploads/' })
@@ -16,6 +17,12 @@ mongoose.connect(dbHost,function(err){
 //middleware
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json({}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+require('./app/passport');
+
 
 app.use(function (req,res,next) {
 	res.header("Access-Control-Allow-Origin", "*");

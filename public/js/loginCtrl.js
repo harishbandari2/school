@@ -23,10 +23,10 @@ school.controller('loginCtrl',function ($scope, $http, $location,$timeout) {
 		})
 
 		.then(function(response){
-			console.log("in");
+		   console.log("in");
 		   console.log(response.data);
 		   var data=response.data;
-		   
+		   	   
 			
 			if(data.retStatus === 'Success') {
 				

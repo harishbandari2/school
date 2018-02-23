@@ -1,4 +1,4 @@
-angular.module('appRoutes',[])
+ angular.module('appRoutes',[])
 .config(['$routeProvider','$locationProvider',function($routeProvider,$locationProvider){
 	$routeProvider
 
@@ -13,7 +13,8 @@ angular.module('appRoutes',[])
 	})
     .when('/tdashboard',{
 		templateUrl: 'views/tdashboard.html',
-		controller : ''
+		controller : '',
+		authenticated:true
 	})
 	.when('/studentlist',{
 		templateUrl: 'views/studentlist.html',
@@ -46,3 +47,6 @@ angular.module('appRoutes',[])
 	
 	$locationProvider.html5Mode(true);
 }]);
+
+
+

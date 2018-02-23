@@ -1,9 +1,9 @@
-
 var express = require('express');
 var router  = express.Router();
 bodyParser  = require('body-parser');
 var mongoose = require('mongoose');
-var bcrypt   = require('bcrypt')
+var bcrypt   = require('bcrypt');
+var jwt      = require('jsonwebtoken');
 
 // creating company schema
 var teacherSchema = mongoose.Schema({
@@ -65,12 +65,21 @@ router.post('/login',function(req, res) {
 		
 		if(docs){
 			if(bcrypt.compareSync(newTeacher.password, docs.password)){
+				
+				var token = jwt.sign(docs.username, 'secret');
+				console.log(token);
 				retStatus = 'Success';				
 				res.send({
-				retStatus  :  retStatus,
+				retStatus  :  retStatus,				
 				redirectTo : '/tdashboard',
-				msg        : 'Just go there please' // this should help
-			  });
+				token      : token,
+				
+				
+				msg        : 'Just go there please', // this should help
+			    teacher:{
+                  name:Teacher.username
+				}
+			});
 			}
 		}
 		
